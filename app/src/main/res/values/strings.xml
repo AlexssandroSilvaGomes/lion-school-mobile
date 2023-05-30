@@ -4,4 +4,7 @@
     <string name="Home_desc">With an intuitive interface and advanced features, the application aims to facilitate the acquisition of knowledge by offering various courses in the area of technology.</string>
     <string name="Button_get_started">Get Started</string>
     <string name="title_activity_courses">CoursesActivity</string>
+    <string name="search_courses">Search Courses...</string>
+    <string name="courses">Courses</string>
+    <string name="title_activity_student">StudentActivity</string>
 </resources>
