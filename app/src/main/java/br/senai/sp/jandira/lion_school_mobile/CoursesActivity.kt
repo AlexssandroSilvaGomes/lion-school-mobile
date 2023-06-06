@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.lion_school_mobile.components.Footer
-import br.senai.sp.jandira.lion_school_mobile.components.Header
+import br.senai.sp.jandira.lion_school_mobile.components.HeaderConfig
 import br.senai.sp.jandira.lion_school_mobile.model.Courses
 import br.senai.sp.jandira.lion_school_mobile.model.CoursesList
 import br.senai.sp.jandira.lion_school_mobile.service.RetrofitFactory
@@ -85,7 +85,7 @@ fun CoursesScreen() {
                 .padding(horizontal = 30.dp, vertical = 20.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Header()
+            HeaderConfig()
             Spacer(modifier = Modifier.height(50.dp))
             Column(
                 modifier = Modifier

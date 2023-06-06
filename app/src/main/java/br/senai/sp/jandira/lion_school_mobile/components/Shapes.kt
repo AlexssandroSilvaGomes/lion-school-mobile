@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun Header() {
+fun HeaderConfig() {
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
@@ -75,10 +75,71 @@ fun Header() {
     }
 }
 
+@Composable
+fun HeaderReturn() {
+    Column(
+        verticalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(80.dp)
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Icon(
+                painter = painterResource(id = br.senai.sp.jandira.lion_school_mobile.R.drawable.baseline_arrow_circle_left_24),
+                contentDescription = "",
+                tint = Color(51, 71, 176)
+            )
+            Row(
+                modifier = Modifier
+                    .height(45.dp)
+            ) {
+                Image(
+                    painter = painterResource(id = br.senai.sp.jandira.lion_school_mobile.R.drawable.logo_image),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .height(45.dp)
+                )
+                Spacer(modifier = Modifier.width(5.dp))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Divider(
+                        modifier = Modifier
+                            .height(84.dp)
+                            .width(2.dp),
+                        color = Color(229, 182, 87)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        text = stringResource(id = br.senai.sp.jandira.lion_school_mobile.R.string.title_name).uppercase(),
+                        fontSize = 16.sp,
+                        modifier = Modifier
+                            .width(65.dp),
+                        fontWeight = FontWeight.Bold,
+                        color = Color(51, 71, 176)
+                    )
+                }
+            }
+        }
+        Divider(
+            modifier = Modifier
+                .height(4.dp)
+                .fillMaxWidth(),
+            color = Color(229, 182, 87)
+        )
+    }
+}
+
+
 @Preview
 @Composable
 fun HeaderPreview() {
-    Header()
+    HeaderConfig()
+    HeaderReturn()
 }
 
 @Preview
