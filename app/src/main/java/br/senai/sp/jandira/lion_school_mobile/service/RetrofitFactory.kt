@@ -5,10 +5,17 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitFactory {
     private val BASE_URL = "https://tired-slug-hat.cyclic.app/v1/lion-school/"
+    private val BASE_URL2 = "https://api-lion-school-2023.cyclic.app/v1/lion-school/"
 
     private val retrofitFactory = Retrofit
         .Builder()
         .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    private val retrofitFactory2 = Retrofit
+        .Builder()
+        .baseUrl(BASE_URL2)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
@@ -21,6 +28,6 @@ class RetrofitFactory {
     }
 
     fun getScoreStudent(): ScoreService{
-        return retrofitFactory.create(ScoreService::class.java)
+        return retrofitFactory2.create(ScoreService::class.java)
     }
 }

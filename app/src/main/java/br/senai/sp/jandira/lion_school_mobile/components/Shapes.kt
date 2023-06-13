@@ -1,25 +1,27 @@
 package br.senai.sp.jandira.lion_school_mobile.components
 
+import android.content.Intent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.senai.sp.jandira.lion_school_mobile.CoursesActivity
 
 @Composable
 fun HeaderConfig() {
     Column(
-        verticalArrangement = Arrangement.SpaceBetween,
+        verticalArrangement = Arrangement.SpaceAround,
         modifier = Modifier
             .fillMaxWidth()
             .height(80.dp)
@@ -27,7 +29,8 @@ fun HeaderConfig() {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 painter = painterResource(id = br.senai.sp.jandira.lion_school_mobile.R.drawable.baseline_settings_24),
@@ -77,8 +80,9 @@ fun HeaderConfig() {
 
 @Composable
 fun HeaderReturn() {
+    val context = LocalContext.current
     Column(
-        verticalArrangement = Arrangement.SpaceBetween,
+        verticalArrangement = Arrangement.SpaceAround,
         modifier = Modifier
             .fillMaxWidth()
             .height(80.dp)
@@ -86,13 +90,23 @@ fun HeaderReturn() {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(
-                painter = painterResource(id = br.senai.sp.jandira.lion_school_mobile.R.drawable.baseline_arrow_circle_left_24),
-                contentDescription = "",
-                tint = Color(51, 71, 176)
-            )
+            Button(onClick = {
+                var openCourses = Intent(context, CoursesActivity::class.java)
+                context.startActivity(openCourses)
+            },
+                colors = ButtonDefaults.buttonColors(Color.Transparent)
+            ) {
+                Icon(
+                    painter = painterResource(id = br.senai.sp.jandira.lion_school_mobile.R.drawable.baseline_arrow_circle_left_24),
+                    contentDescription = "",
+                    modifier = Modifier.size(32.dp),
+                    tint = Color(51, 71, 176)
+                )
+            }
+
             Row(
                 modifier = Modifier
                     .height(45.dp)

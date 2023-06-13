@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -27,6 +28,7 @@ import br.senai.sp.jandira.lion_school_mobile.model.StudentList
 import br.senai.sp.jandira.lion_school_mobile.service.RetrofitFactory
 import br.senai.sp.jandira.lion_school_mobile.ui.theme.LionSchoolMobileTheme
 import coil.compose.AsyncImage
+import okhttp3.internal.wait
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -52,6 +54,10 @@ fun StudentScreen(sigla: String) {
         mutableStateOf(listOf<Student>())
     }
 
+    var listAssistant by remember {
+        mutableStateOf(listOf<Student>())
+    }
+
     var name by remember {
         mutableStateOf("")
     }
@@ -64,6 +70,7 @@ fun StudentScreen(sigla: String) {
             response: Response<StudentList>
         ) {
             listStudent = response.body()!!.aluno
+            listAssistant = response.body()!!.aluno
 
             name = response.body()!!.NomeCurso
         }
@@ -86,56 +93,110 @@ fun StudentScreen(sigla: String) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                    .weight(weight = 1f)
+//                    .verticalScroll(rememberScrollState())
+//                    .weight(weight = 1f)
             ) {
                 Spacer(modifier = Modifier.height(48.dp))
-                Text(text = stringResource(id = R.string.courses),
-                    fontSize = 24.sp,
-                    color = Color.Black)
-            }
-            Spacer(modifier = Modifier.height(24.dp))
-            LazyColumn() {
-                items(listStudent) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
                     Button(
                         onClick = {
-                            var openScore = Intent()
-                            openScore.putExtra("numeroMatricula", it.matricula)
-                            context.startActivity(openScore)
-                        },
+                        listStudent = listAssistant
+                    },
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(IntrinsicSize.Max),
-                        colors = ButtonDefaults.buttonColors(getColorStatus(it.status)),
-                        shape = RoundedCornerShape(10.dp)
+                            .width(IntrinsicSize.Min)
+                            .height(40.dp),
+                        border = BorderStroke(2.dp, color = Color(229, 182, 87)),
+                        shape = RoundedCornerShape(10.dp),
+                        colors = ButtonDefaults.buttonColors(Color(51, 71, 176))) {
+                        Text(
+                            text = stringResource(id = R.string.filterAll),
+                            color = Color.White
+                        )
+                    }
+                    Button(onClick = {
+                        listStudent = listAssistant.filter { it.status == "Cursando" }
+                    },
+                        modifier = Modifier
+                            .width(IntrinsicSize.Min)
+                            .height(40.dp),
+                        border = BorderStroke(2.dp, color = Color(229, 182, 87)),
+                        shape = RoundedCornerShape(10.dp),
+                        colors = ButtonDefaults.buttonColors(Color(51, 71, 176))
                     ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
+                     Text(
+                         text = stringResource(id = R.string.filterStudying),
+                         color = Color.White
+                     )
+                    }
+                    Button(onClick = {
+                        listStudent = listAssistant.filter { it.status == "Finalizado" }
+                    },
+                        modifier = Modifier
+                            .width(IntrinsicSize.Min)
+                            .height(40.dp),
+                        border = BorderStroke(2.dp, color = Color(229, 182, 87)),
+                        shape = RoundedCornerShape(10.dp),
+                        colors = ButtonDefaults.buttonColors(Color(51, 71, 176))
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.filterFinished),
+                            color = Color.White
+                        )
+                    }
+
+                }
+                Spacer(modifier = Modifier.height(48.dp))
+                Text(text = stringResource(id = R.string.students),
+                    fontSize = 24.sp,
+                    color = Color.Black)
+                Spacer(modifier = Modifier.height(24.dp))
+                LazyColumn() {
+                    items(listStudent) {
+                        Button(
+                            onClick = {
+                                var openScore = Intent(context, StudentDataActivity::class.java)
+                                openScore.putExtra("numeroMatricula", it.matricula)
+                                context.startActivity(openScore)
+                            },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(IntrinsicSize.Max)
+                                .height(IntrinsicSize.Max),
+                            colors = ButtonDefaults.buttonColors(getColorStatus(it.status)),
+                            shape = RoundedCornerShape(10.dp)
                         ) {
-                            AsyncImage(
-                                model = it.foto,
-                                contentDescription = "",
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier
-                                    .size(80.dp)
-                            )
-                            Text(
-                                text = it.nome.uppercase(),
-                                color = Color.White,
-                                fontSize = 16.sp
-                            )
+                                    .fillMaxWidth()
+                                    .height(IntrinsicSize.Max)
+                            ) {
+                                AsyncImage(
+                                    model = it.foto,
+                                    contentDescription = "",
+                                    modifier = Modifier
+                                        .size(80.dp)
+                                )
+                                Text(
+                                    text = it.nome.uppercase(),
+                                    color = Color.White,
+                                    fontSize = 16.sp
+                                )
+                            }
                         }
+                        Spacer(modifier = Modifier.height(16.dp))
                     }
                 }
             }
-            Footer()
+
         }
     }
 }
 
-fun getColorStatus(status: String): Color{
+fun getColorStatus(status: String): Color {
     return if(status != "Finalizado") {
         Color(51, 71, 176)
     }else{
