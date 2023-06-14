@@ -35,7 +35,8 @@ fun HeaderConfig() {
             Icon(
                 painter = painterResource(id = br.senai.sp.jandira.lion_school_mobile.R.drawable.baseline_settings_24),
                 contentDescription = "",
-                tint = Color(51, 71, 176)
+                tint = Color(51, 71, 176),
+                modifier = Modifier.size(42.dp)
             )
             Row(
                 modifier = Modifier
@@ -93,16 +94,14 @@ fun HeaderReturn() {
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Button(onClick = {
+            IconButton(onClick = {
                 var openCourses = Intent(context, CoursesActivity::class.java)
                 context.startActivity(openCourses)
-            },
-                colors = ButtonDefaults.buttonColors(Color.Transparent)
-            ) {
+            }) {
                 Icon(
                     painter = painterResource(id = br.senai.sp.jandira.lion_school_mobile.R.drawable.baseline_arrow_circle_left_24),
                     contentDescription = "",
-                    modifier = Modifier.size(32.dp),
+                    modifier = Modifier.size(42.dp),
                     tint = Color(51, 71, 176)
                 )
             }
